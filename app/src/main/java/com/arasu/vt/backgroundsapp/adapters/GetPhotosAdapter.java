@@ -1,6 +1,7 @@
 package com.arasu.vt.backgroundsapp.adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.arasu.vt.backgroundsapp.R;
+import com.arasu.vt.backgroundsapp.activity.FullScreenActivity;
 import com.arasu.vt.backgroundsapp.pojo.PhotoResponse;
 import com.squareup.picasso.Picasso;
 
@@ -39,11 +41,20 @@ public class GetPhotosAdapter extends RecyclerView.Adapter<GetPhotosAdapter.Phot
 
     @Override
     public void onBindViewHolder(PhotoViewHolder holder, int position) {
-        PhotoResponse photoResponse=photosList.get(position);
+        final PhotoResponse photoResponse=photosList.get(position);
         String regular=photoResponse.getUrls().getRegular();
         if(regular!=null){
             Picasso.with(mContext).load(regular).into(holder.image_id);
         }
+        holder.image_id.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent=new Intent(mContext, FullScreenActivity.class);
+                intent.putExtra("url",photoResponse.getUrls().getFull());
+                mContext.startActivity(intent);
+
+            }
+        });
     }
 
     @Override
