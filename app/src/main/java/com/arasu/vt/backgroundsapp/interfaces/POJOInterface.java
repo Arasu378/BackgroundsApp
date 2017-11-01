@@ -18,5 +18,5 @@ import retrofit2.http.Query;
 public interface POJOInterface {
     @Headers("Authorization: Client-ID "+ Utils.Application_ID)
     @GET("/photos")
-    Call<ArrayList<PhotoResponse>> getPhotosList(@Query("per_page")int page,@Query("order_By")String order_By);
+    Call<ArrayList<PhotoResponse>> getPhotosList(@Query("per_page")int per_page,@Query("order_By")String order_By,@Query("page")int page);
 }
