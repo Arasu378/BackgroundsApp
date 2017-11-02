@@ -81,7 +81,8 @@ public class HomeFragment extends android.support.v4.app.Fragment implements Pho
                 // Add whatever code is needed to append new items to the bottom of the list
                 page=page+1;
                // getPhotosList(perPage,order_By,page);
-
+                Toast.makeText(getContext(),"Load More",Toast.LENGTH_SHORT).show();
+                mService.getPhotosList(perPage,order_By,page);
             }
         };
         // Adds the scroll listener to RecyclerView
