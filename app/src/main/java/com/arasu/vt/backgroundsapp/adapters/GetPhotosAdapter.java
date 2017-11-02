@@ -20,17 +20,25 @@ import java.util.ArrayList;
  */
 
 public class GetPhotosAdapter extends RecyclerView.Adapter<GetPhotosAdapter.PhotoViewHolder> {
-    private Context mContext;
+
     private ArrayList<PhotoResponse>photosList;
-    public GetPhotosAdapter(Context mContext,ArrayList<PhotoResponse>photosList){
-        this.mContext=mContext;
-        this.photosList=photosList;
+    private final LayoutInflater mInflater;
+    private PhotoClickListener mListener;
+    public GetPhotosAdapter(PhotoClickListener listener,LayoutInflater inflater){
+        mListener=listener;
+        mInflater=inflater;
+        photosList=new ArrayList<PhotoResponse>();
     }
-    public class PhotoViewHolder extends RecyclerView.ViewHolder{
+    public class PhotoViewHolder extends RecyclerView.ViewHolder implements  View.OnClickListener{
             ImageView image_id;
         public PhotoViewHolder(View itemView) {
             super(itemView);
             image_id=(ImageView)itemView.findViewById(R.id.image_id);
+        }
+
+        @Override
+        public void onClick(View view) {
+            mListener.onClick(getLayoutPosition(),photosList.get(getAdapterPosition()).getUser().getName());
         }
     }
     @Override
@@ -44,17 +52,17 @@ public class GetPhotosAdapter extends RecyclerView.Adapter<GetPhotosAdapter.Phot
         final PhotoResponse photoResponse=photosList.get(position);
         String regular=photoResponse.getUrls().getRegular();
         if(regular!=null){
-            Picasso.with(mContext).load(regular).into(holder.image_id);
+            Picasso.with(holder.itemView.getContext()).load(regular).into(holder.image_id);
         }
-        holder.image_id.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent=new Intent(mContext, FullScreenActivity.class);
-                intent.putExtra("url",photoResponse.getUrls().getFull());
-                mContext.startActivity(intent);
-
-            }
-        });
+//        holder.image_id.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                Intent intent=new Intent(mContext, FullScreenActivity.class);
+//                intent.putExtra("url",photoResponse.getUrls().getFull());
+//                mContext.startActivity(intent);
+//
+//            }
+//        });
     }
 
     @Override
@@ -65,5 +73,12 @@ public class GetPhotosAdapter extends RecyclerView.Adapter<GetPhotosAdapter.Phot
             return 0;
         }
 
+    }
+    public void addPhotos(ArrayList<PhotoResponse>photoResponses){
+        photosList.addAll(photoResponses);
+        notifyDataSetChanged();
+    }
+    public interface PhotoClickListener{
+        void onClick(int position,String name);
     }
 }

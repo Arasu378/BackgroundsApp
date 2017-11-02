@@ -1,5 +1,7 @@
 package com.arasu.vt.backgroundsapp.application;
 
+import com.arasu.vt.backgroundsapp.interfaces.POJOInterface;
+
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
@@ -15,8 +17,13 @@ public class ApiClient {
             retrofit=new Retrofit.Builder()
                     .baseUrl(BASE_URL)
                     .addConverterFactory(GsonConverterFactory.create())
+                 //   .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                     .build();
         }
         return retrofit;
+    }
+    public POJOInterface getPOJOInterface(){
+        final Retrofit retrofit=getRetrofit();
+        return retrofit.create(POJOInterface.class);
     }
 }

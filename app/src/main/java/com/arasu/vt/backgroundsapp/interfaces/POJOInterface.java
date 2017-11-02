@@ -10,6 +10,7 @@ import retrofit2.Call;
 import retrofit2.http.GET;
 import retrofit2.http.Headers;
 import retrofit2.http.Query;
+import rx.Observable;
 
 /**
  * Created by kyros on 31-10-2017.
@@ -18,5 +19,9 @@ import retrofit2.http.Query;
 public interface POJOInterface {
     @Headers("Authorization: Client-ID "+ Utils.Application_ID)
     @GET("/photos")
-    Call<ArrayList<PhotoResponse>> getPhotosList(@Query("per_page")int per_page,@Query("order_By")String order_By,@Query("page")int page);
+  //  Call<ArrayList<PhotoResponse>> getPhotosList(@Query("per_page")int per_page,@Query("order_By")String order_By,@Query("page")int page);
+    Observable<ArrayList<PhotoResponse>> getPhotosList(@Query("per_page")int per_page, @Query("order_By")String order_By, @Query("page")int page);
+//    @GET("search/tweets.json")
+//    Flowable<SearchResponse> searchTweets(@Query("q") String query);
+
 }

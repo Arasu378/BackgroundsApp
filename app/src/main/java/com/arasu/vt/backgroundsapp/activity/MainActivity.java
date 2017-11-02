@@ -1,5 +1,6 @@
 package com.arasu.vt.backgroundsapp.activity;
 
+import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
@@ -8,7 +9,18 @@ import android.view.MenuItem;
 import android.widget.TextView;
 
 import com.arasu.vt.backgroundsapp.R;
+import com.arasu.vt.backgroundsapp.adapters.GetPhotosAdapter;
+import com.arasu.vt.backgroundsapp.base.PhotosPresenter;
 import com.arasu.vt.backgroundsapp.fragment.HomeFragment;
+import com.arasu.vt.backgroundsapp.interfaces.POJOInterface;
+import com.arasu.vt.backgroundsapp.interfaces.PhotoViewInterface;
+import com.arasu.vt.backgroundsapp.pojo.PhotoResponse;
+
+import java.util.ArrayList;
+
+import javax.inject.Inject;
+
+import rx.Observable;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -48,5 +60,6 @@ public class MainActivity extends AppCompatActivity {
         fragmentTransaction.replace(R.id.content,fragment);
         fragmentTransaction.commit();
     }
+
 
 }
